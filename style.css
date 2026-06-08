@@ -525,3 +525,39 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: translateY(-1px);
   opacity: 0.9;
 }
+/* ---- PAYMENT INFO BOX ---- */
+.payment-info-box {
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.payment-info-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #a855f7;
+  margin-bottom: 12px;
+}
+
+.payment-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+}
+
+.payment-info-row:last-child {
+  border-bottom: none;
+}
+
+.payment-info-row span {
+  color: #888;
+}
+
+.payment-info-row strong {
+  color: #fff;
+}

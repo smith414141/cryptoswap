@@ -127,7 +127,19 @@ function selectNetwork(network) {
   highlightSelected("buy-step-2", network);
   document.getElementById("buy-step-3").style.display = "block";
 }
-
+// Your payment details — edit these to your real info
+const myPaymentDetails = {
+  bank: {
+    name: "YOUR FULL NAME",
+    bankName: "YOUR BANK NAME",
+    accountNumber: "YOUR ACCOUNT NUMBER",
+  },
+  mobilemoney: {
+    name: "YOUR FULL NAME",
+    phone: "YOUR PHONE NUMBER",
+    provider: "YOUR PROVIDER (e.g. Telebirr, M-Pesa)",
+  },
+};
 function goToStep4() {
   const amount = document.getElementById("buy-amount").value;
   const payment = document.getElementById("buy-payment").value;
@@ -135,11 +147,40 @@ function goToStep4() {
     alert("Please fill in amount and payment method");
     return;
   }
+  if (amount <= 0) {
+    alert("Please enter a valid amount");
+    return;
+  }
   buyOrder.amount = amount;
   buyOrder.payment = payment;
-  document.getElementById(
-    "buy-summary"
-  ).textContent = `Buying ${buyOrder.crypto} (${buyOrder.network}) — $${buyOrder.amount} via ${buyOrder.payment}`;
+
+  // Show payment details
+  const details = myPaymentDetails[payment];
+  let detailsHTML = "";
+  if (payment === "bank") {
+    detailsHTML = `
+      <div class="payment-info-box">
+        <p class="payment-info-title">💳 Send payment to this bank account:</p>
+        <div class="payment-info-row"><span>Name</span><strong>${details.name}</strong></div>
+        <div class="payment-info-row"><span>Bank</span><strong>${details.bankName}</strong></div>
+        <div class="payment-info-row"><span>Account</span><strong>${details.accountNumber}</strong></div>
+        <div class="payment-info-row"><span>Amount</span><strong>$${amount}</strong></div>
+      </div>
+    `;
+  } else {
+    detailsHTML = `
+      <div class="payment-info-box">
+        <p class="payment-info-title">📱 Send payment via ${details.provider}:</p>
+        <div class="payment-info-row"><span>Name</span><strong>${details.name}</strong></div>
+        <div class="payment-info-row"><span>Phone</span><strong>${details.phone}</strong></div>
+        <div class="payment-info-row"><span>Amount</span><strong>$${amount}</strong></div>
+      </div>
+    `;
+  }
+
+  document.getElementById("buy-summary").innerHTML =
+    `<p style="margin-bottom:12px">Buying <strong>${buyOrder.crypto}</strong> (${buyOrder.network})</p>` +
+    detailsHTML;
   document.getElementById("buy-step-4").style.display = "block";
 }
 
@@ -149,31 +190,60 @@ function submitBuyOrder() {
     alert("Please upload your payment receipt");
     return;
   }
+
+  // Prevent duplicate submission
+  const submitBtn = document.querySelector("#buy-step-4 .submit-btn");
+  if (submitBtn.disabled) return;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
   const user = auth.currentUser;
   const reader = new FileReader();
   reader.onload = function (e) {
     const receiptBase64 = e.target.result;
+
+    // Check if same receipt already uploaded
     db.collection("orders")
-      .add({
-        userId: user.uid,
-        userEmail: user.email,
-        type: "buy",
-        crypto: buyOrder.crypto,
-        network: buyOrder.network,
-        amount: buyOrder.amount,
-        paymentMethod: buyOrder.payment,
-        receiptImage: receiptBase64,
-        status: "pending",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      .where("userId", "==", user.uid)
+      .where("receiptImage", "==", receiptBase64)
+      .get()
+      .then((snapshot) => {
+        if (!snapshot.empty) {
+          alert("⚠️ This receipt has already been uploaded before!");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit Order";
+          return;
+        }
+        // Save order
+        return db
+          .collection("orders")
+          .add({
+            userId: user.uid,
+            userEmail: user.email,
+            type: "buy",
+            crypto: buyOrder.crypto,
+            network: buyOrder.network,
+            amount: buyOrder.amount,
+            paymentMethod: buyOrder.payment,
+            receiptImage: receiptBase64,
+            status: "pending",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            alert("✅ Buy order submitted! We will process it shortly.");
+            document
+              .querySelectorAll(".section")
+              .forEach((s) => (s.style.display = "none"));
+            loadOrders();
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Order";
+          });
       })
-      .then(() => {
-        alert("✅ Buy order submitted! We will process it shortly.");
-        document
-          .querySelectorAll(".section")
-          .forEach((s) => (s.style.display = "none"));
-        loadOrders();
-      })
-      .catch((err) => alert(err.message));
+      .catch((err) => {
+        alert(err.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
+      });
   };
   reader.readAsDataURL(file);
 }
