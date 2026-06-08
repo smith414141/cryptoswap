@@ -362,3 +362,51 @@ auth.onAuthStateChanged((user) => {
     document.getElementById("dashboard").style.display = "none";
   }
 });
+// ---- ANIMATED BACKGROUND ----
+const canvas = document.getElementById("bg-canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+const symbols = ["₿", "Ξ", "₮", "◎", "⬡", "✦", "◈"];
+const particles = [];
+
+for (let i = 0; i < 30; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    symbol: symbols[Math.floor(Math.random() * symbols.length)],
+    size: Math.random() * 14 + 8,
+    speedX: (Math.random() - 0.5) * 0.4,
+    speedY: (Math.random() - 0.5) * 0.4,
+    opacity: Math.random() * 0.12 + 0.03,
+    color: ["#4F8EF7", "#A78BFA", "#F0B90B", "#10b981"][
+      Math.floor(Math.random() * 4)
+    ],
+  });
+}
+
+function animateBg() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p) => {
+    ctx.globalAlpha = p.opacity;
+    ctx.fillStyle = p.color;
+    ctx.font = `${p.size}px Inter`;
+    ctx.fillText(p.symbol, p.x, p.y);
+    p.x += p.speedX;
+    p.y += p.speedY;
+    if (p.x > canvas.width + 20) p.x = -20;
+    if (p.x < -20) p.x = canvas.width + 20;
+    if (p.y > canvas.height + 20) p.y = -20;
+    if (p.y < -20) p.y = canvas.height + 20;
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(animateBg);
+}
+animateBg();

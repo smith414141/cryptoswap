@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <canvas id="bg-canvas"></canvas>
     <!-- AUTH SCREEN -->
     <div id="auth-screen">
       <h1>CryptoSwap</h1>
@@ -27,6 +28,11 @@
         <button onclick="register()">Register</button>
         <button onclick="showLogin()">Back to Login</button>
       </div>
+      <div class="trust-badges">
+        <div class="trust-badge"><span>🔒</span> Secure</div>
+        <div class="trust-badge"><span>⚡</span> Fast</div>
+        <div class="trust-badge"><span>✅</span> Verified</div>
+      </div>
     </div>
 
     <!-- DASHBOARD (hidden until logged in) -->
@@ -41,6 +47,10 @@
       <div id="welcome-banner">
         <p id="welcome-text">Welcome back 👋</p>
         <p id="user-email-display"></p>
+        <div class="live-indicator">
+          <div class="live-dot"></div>
+          Platform Live
+        </div>
       </div>
 
       <!-- Main Action Buttons -->
