@@ -95,7 +95,12 @@
         <!-- Step 3: Amount + Payment Method -->
         <div class="step-box" id="buy-step-3" style="display: none">
           <p class="step-label">Step 3 — Amount & Payment</p>
-          <input type="number" id="buy-amount" placeholder="Amount in USD" />
+          <input
+            type="number"
+            id="buy-amount"
+            placeholder="Amount in USD"
+            min="0"
+          />
           <select id="buy-payment">
             <option value="">-- Select Payment Method --</option>
             <option value="bank">Bank Transfer</option>
@@ -154,7 +159,12 @@
         <!-- Step 3: Amount + Your Payment Details -->
         <div class="step-box" id="sell-step-3" style="display: none">
           <p class="step-label">Step 3 — Amount & Your Payment Details</p>
-          <input type="number" id="sell-amount" placeholder="Amount in USD" />
+          <input
+            type="number"
+            id="sell-amount"
+            placeholder="Amount in USD"
+            min="0"
+          />
           <select id="sell-payment">
             <option value="">-- How do you want to receive money? --</option>
             <option value="bank">Bank Transfer</option>
