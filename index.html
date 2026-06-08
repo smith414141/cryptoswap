@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CryptoSwap</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- AUTH SCREEN -->
+    <div id="auth-screen">
+      <h1>CryptoSwap</h1>
+      <p>Buy & Sell Crypto Instantly</p>
+
+      <div id="login-form">
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+        <button onclick="showRegister()">Create Account</button>
+      </div>
+
+      <div id="register-form" style="display: none">
+        <input type="text" id="reg-name" placeholder="Full Name" />
+        <input type="email" id="reg-email" placeholder="Email" />
+        <input type="password" id="reg-password" placeholder="Password" />
+        <input type="tel" id="reg-phone" placeholder="Phone Number" />
+        <button onclick="register()">Register</button>
+        <button onclick="showLogin()">Back to Login</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD (hidden until logged in) -->
+    <div id="dashboard" style="display: none">
+      <h2>Welcome back!</h2>
+      <button onclick="logout()">Logout</button>
+      <div>
+        <button onclick="showBuy()">Buy Crypto</button>
+        <button onclick="showSell()">Sell Crypto</button>
+      </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
