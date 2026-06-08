@@ -230,7 +230,10 @@ function submitBuyOrder() {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
           .then(() => {
-            alert("✅ Buy order submitted! We will process it shortly.");
+            showToast(
+              "Buy order submitted! We will process it shortly.",
+              "success"
+            );
             document
               .querySelectorAll(".section")
               .forEach((s) => (s.style.display = "none"));
@@ -284,7 +287,7 @@ function goToSellStep4() {
 function copyAddress() {
   const address = document.getElementById("wallet-address-display").textContent;
   navigator.clipboard.writeText(address);
-  alert("Address copied!");
+  showToast("Address copied to clipboard!", "success");
 }
 
 function submitSellOrder() {
@@ -303,7 +306,10 @@ function submitSellOrder() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
-      alert("✅ Sell order submitted! We will send your money shortly.");
+      showToast(
+        "Sell order submitted! We will send your money shortly.",
+        "success"
+      );
       document
         .querySelectorAll(".section")
         .forEach((s) => (s.style.display = "none"));
@@ -410,3 +416,30 @@ function animateBg() {
   requestAnimationFrame(animateBg);
 }
 animateBg();
+// ---- TOAST (main site) ----
+// Add toast container to index.html body too
+if (!document.getElementById("toast-container")) {
+  const tc = document.createElement("div");
+  tc.id = "toast-container";
+  document.body.appendChild(tc);
+}
+
+function showToast(message, type = "success") {
+  const container = document.getElementById("toast-container");
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  const icons = { success: "✅", error: "❌", "new-order": "🔔" };
+  toast.innerHTML = `
+    <div class="toast-icon">${icons[type] || "💬"}</div>
+    <div class="toast-message">${message}</div>
+    <div class="toast-close" onclick="this.parentElement.remove()">✕</div>
+    <div class="toast-progress"></div>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add("toast-show"), 10);
+  setTimeout(() => {
+    toast.classList.remove("toast-show");
+    toast.classList.add("toast-hide");
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
+}

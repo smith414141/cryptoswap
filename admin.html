@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CryptoSwap Admin</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- ADMIN LOGIN -->
+    <div id="admin-login">
+      <div class="admin-login-box">
+        <div class="admin-logo">🛡️ Admin Panel</div>
+        <p>CryptoSwap Management</p>
+        <input type="email" id="admin-email" placeholder="Admin Email" />
+        <input type="password" id="admin-password" placeholder="Password" />
+        <button onclick="adminLogin()">Access Panel</button>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="admin-dashboard" style="display: none">
+      <div id="admin-header">
+        <div class="admin-header-left">
+          <span class="admin-logo-text">⚡ CryptoSwap</span>
+          <span class="admin-tag">Admin</span>
+        </div>
+        <div class="admin-header-right">
+          <div class="live-indicator">
+            <div class="live-dot"></div>
+            Live
+          </div>
+          <button onclick="adminLogout()" id="logout-btn">Logout</button>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div id="admin-stats">
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <span id="stat-pending">0</span>
+            <p>Pending</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <span id="stat-completed">0</span>
+            <p>Completed</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-info">
+            <span id="stat-total">0</span>
+            <p>Total Orders</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER TABS -->
+      <div id="filter-tabs">
+        <button class="filter-tab active" onclick="filterOrders('all', this)">
+          All
+        </button>
+        <button class="filter-tab" onclick="filterOrders('pending', this)">
+          Pending
+        </button>
+        <button class="filter-tab" onclick="filterOrders('confirmed', this)">
+          Confirmed
+        </button>
+        <button class="filter-tab" onclick="filterOrders('completed', this)">
+          Completed
+        </button>
+        <button class="filter-tab" onclick="filterOrders('cancelled', this)">
+          Cancelled
+        </button>
+      </div>
+
+      <!-- ORDERS LIST -->
+      <div id="admin-orders">
+        <div class="loading-orders">Loading orders...</div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-container"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
