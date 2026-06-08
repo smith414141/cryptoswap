@@ -1,0 +1,383 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #0f0f0f;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* ---- AUTH SCREEN ---- */
+#auth-screen {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 40px;
+  background: #1a1a1a;
+  border-radius: 16px;
+  border: 1px solid #2a2a2a;
+}
+
+#auth-screen h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #f0b90b;
+}
+
+#auth-screen p {
+  color: #888;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+#auth-screen input {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: #242424;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+#auth-screen input:focus {
+  border-color: #f0b90b;
+}
+
+#auth-screen button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#auth-screen button:first-of-type {
+  background: #f0b90b;
+  color: #000;
+}
+
+#auth-screen button:last-of-type {
+  background: #242424;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+#auth-screen button:hover {
+  opacity: 0.85;
+}
+
+/* ---- DASHBOARD ---- */
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #2a2a2a;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#header h2 {
+  color: #f0b90b;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+#logout-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #888;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+#logout-btn:hover {
+  border-color: #f0b90b;
+  color: #f0b90b;
+}
+
+#welcome-banner {
+  padding: 24px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-bottom: 1px solid #2a2a2a;
+}
+
+#welcome-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+#user-email-display {
+  color: #888;
+  font-size: 13px;
+}
+
+/* ---- ACTION BUTTONS ---- */
+#action-buttons {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.buy-btn {
+  background: linear-gradient(135deg, #f0b90b, #f8d060);
+  color: #000;
+}
+
+.sell-btn {
+  background: linear-gradient(135deg, #1db954, #17a348);
+  color: #fff;
+}
+
+/* ---- SECTIONS ---- */
+.section {
+  padding: 24px;
+  max-width: 600px;
+}
+
+.section h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #f0b90b;
+}
+
+.step-box {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.step-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+}
+
+/* ---- CRYPTO BUTTONS ---- */
+.crypto-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.crypto-btn {
+  padding: 10px 24px;
+  background: #242424;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.crypto-btn:hover {
+  border-color: #f0b90b;
+  color: #f0b90b;
+}
+
+/* ---- INPUTS ---- */
+.step-box input,
+.step-box select {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: #242424;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.step-box input:focus,
+.step-box select:focus {
+  border-color: #f0b90b;
+}
+
+.step-box select option {
+  background: #242424;
+}
+
+/* ---- BUTTONS ---- */
+.next-btn {
+  padding: 12px 28px;
+  background: #f0b90b;
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.next-btn:hover {
+  opacity: 0.85;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #1db954, #17a348);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover {
+  opacity: 0.85;
+}
+
+/* ---- WALLET ADDRESS BOX ---- */
+#wallet-address-box {
+  background: #242424;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+#wallet-address-box p:first-child {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+#wallet-address-display {
+  font-family: monospace;
+  font-size: 13px;
+  color: #f0b90b;
+  word-break: break-all;
+  margin-bottom: 12px;
+}
+
+#wallet-address-box button {
+  padding: 8px 16px;
+  background: #333;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+#wallet-address-box button:hover {
+  background: #444;
+}
+
+/* ---- ORDERS ---- */
+#orders-section {
+  padding: 24px;
+}
+
+#orders-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.order-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.order-type {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.order-type.buy {
+  background: rgba(240, 185, 11, 0.15);
+  color: #f0b90b;
+}
+
+.order-type.sell {
+  background: rgba(29, 185, 84, 0.15);
+  color: #1db954;
+}
+
+.status-badge {
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-badge.pending {
+  background: rgba(255, 165, 0, 0.15);
+  color: orange;
+}
+
+.status-badge.confirmed {
+  background: rgba(29, 185, 84, 0.15);
+  color: #1db954;
+}
+
+.status-badge.completed {
+  background: rgba(29, 185, 84, 0.3);
+  color: #1db954;
+}
+
+.status-badge.cancelled {
+  background: rgba(255, 59, 59, 0.15);
+  color: #ff3b3b;
+}
