@@ -168,7 +168,9 @@ function submitBuyOrder() {
       })
       .then(() => {
         alert("✅ Buy order submitted! We will process it shortly.");
-        showSection("");
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => (s.style.display = "none"));
         loadOrders();
       })
       .catch((err) => alert(err.message));
@@ -232,7 +234,9 @@ function submitSellOrder() {
     })
     .then(() => {
       alert("✅ Sell order submitted! We will send your money shortly.");
-      showSection("");
+      document
+        .querySelectorAll(".section")
+        .forEach((s) => (s.style.display = "none"));
       loadOrders();
     })
     .catch((err) => alert(err.message));
