@@ -31,11 +31,162 @@
 
     <!-- DASHBOARD (hidden until logged in) -->
     <div id="dashboard" style="display: none">
-      <h2>Welcome back!</h2>
-      <button onclick="logout()">Logout</button>
-      <div>
-        <button onclick="showBuy()">Buy Crypto</button>
-        <button onclick="showSell()">Sell Crypto</button>
+      <!-- Header -->
+      <div id="header">
+        <h2>CryptoSwap</h2>
+        <button onclick="logout()" id="logout-btn">Logout</button>
+      </div>
+
+      <!-- Welcome -->
+      <div id="welcome-banner">
+        <p id="welcome-text">Welcome back 👋</p>
+        <p id="user-email-display"></p>
+      </div>
+
+      <!-- Main Action Buttons -->
+      <div id="action-buttons">
+        <button class="action-btn buy-btn" onclick="showSection('buy-section')">
+          💰 Buy Crypto
+        </button>
+        <button
+          class="action-btn sell-btn"
+          onclick="showSection('sell-section')"
+        >
+          💸 Sell Crypto
+        </button>
+      </div>
+
+      <!-- BUY SECTION -->
+      <div id="buy-section" class="section" style="display: none">
+        <h3>Buy Crypto</h3>
+
+        <!-- Step 1: Choose Crypto -->
+        <div class="step-box" id="buy-step-1">
+          <p class="step-label">Step 1 — Choose Crypto</p>
+          <div class="crypto-options">
+            <button class="crypto-btn" onclick="selectCrypto('USDT')">
+              USDT
+            </button>
+            <button class="crypto-btn" onclick="selectCrypto('BTC')">
+              BTC
+            </button>
+            <button class="crypto-btn" onclick="selectCrypto('ETH')">
+              ETH
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Choose Network -->
+        <div class="step-box" id="buy-step-2" style="display: none">
+          <p class="step-label">Step 2 — Choose Network</p>
+          <div class="crypto-options">
+            <button class="crypto-btn" onclick="selectNetwork('TRC20')">
+              TRC20
+            </button>
+            <button class="crypto-btn" onclick="selectNetwork('ERC20')">
+              ERC20
+            </button>
+            <button class="crypto-btn" onclick="selectNetwork('BEP20')">
+              BEP20
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Amount + Payment Method -->
+        <div class="step-box" id="buy-step-3" style="display: none">
+          <p class="step-label">Step 3 — Amount & Payment</p>
+          <input type="number" id="buy-amount" placeholder="Amount in USD" />
+          <select id="buy-payment">
+            <option value="">-- Select Payment Method --</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="mobilemoney">Mobile Money</option>
+          </select>
+          <button class="next-btn" onclick="goToStep4()">Next →</button>
+        </div>
+
+        <!-- Step 4: Upload Receipt -->
+        <div class="step-box" id="buy-step-4" style="display: none">
+          <p class="step-label">Step 4 — Upload Payment Receipt</p>
+          <p id="buy-summary"></p>
+          <input type="file" id="receipt-upload" accept="image/*" />
+          <button class="submit-btn" onclick="submitBuyOrder()">
+            Submit Order
+          </button>
+        </div>
+      </div>
+
+      <!-- SELL SECTION -->
+      <div id="sell-section" class="section" style="display: none">
+        <h3>Sell Crypto</h3>
+
+        <!-- Step 1: Choose Crypto -->
+        <div class="step-box" id="sell-step-1">
+          <p class="step-label">Step 1 — Choose Crypto</p>
+          <div class="crypto-options">
+            <button class="crypto-btn" onclick="selectSellCrypto('USDT')">
+              USDT
+            </button>
+            <button class="crypto-btn" onclick="selectSellCrypto('BTC')">
+              BTC
+            </button>
+            <button class="crypto-btn" onclick="selectSellCrypto('ETH')">
+              ETH
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Choose Network -->
+        <div class="step-box" id="sell-step-2" style="display: none">
+          <p class="step-label">Step 2 — Choose Network</p>
+          <div class="crypto-options">
+            <button class="crypto-btn" onclick="selectSellNetwork('TRC20')">
+              TRC20
+            </button>
+            <button class="crypto-btn" onclick="selectSellNetwork('ERC20')">
+              ERC20
+            </button>
+            <button class="crypto-btn" onclick="selectSellNetwork('BEP20')">
+              BEP20
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Amount + Your Payment Details -->
+        <div class="step-box" id="sell-step-3" style="display: none">
+          <p class="step-label">Step 3 — Amount & Your Payment Details</p>
+          <input type="number" id="sell-amount" placeholder="Amount in USD" />
+          <select id="sell-payment">
+            <option value="">-- How do you want to receive money? --</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="mobilemoney">Mobile Money</option>
+          </select>
+          <input
+            type="text"
+            id="sell-account"
+            placeholder="Account number / Phone number"
+          />
+          <button class="next-btn" onclick="goToSellStep4()">Next →</button>
+        </div>
+
+        <!-- Step 4: Show wallet address -->
+        <div class="step-box" id="sell-step-4" style="display: none">
+          <p class="step-label">Step 4 — Send Crypto to This Address</p>
+          <p id="sell-summary"></p>
+          <div id="wallet-address-box">
+            <p>Send your crypto to:</p>
+            <p id="wallet-address-display"></p>
+            <button onclick="copyAddress()">📋 Copy Address</button>
+          </div>
+          <button class="submit-btn" onclick="submitSellOrder()">
+            ✅ I've Sent the Crypto
+          </button>
+        </div>
+      </div>
+
+      <!-- ORDER HISTORY -->
+      <div id="orders-section">
+        <h3>My Orders</h3>
+        <div id="orders-list">Loading...</div>
       </div>
     </div>
 
