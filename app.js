@@ -202,10 +202,12 @@ function submitBuyOrder() {
   reader.onload = function (e) {
     const receiptBase64 = e.target.result;
 
-    // Check if same receipt already uploaded
+    // Check if same receipt already uploaded using file fingerprint
+    const fileFingerprint =
+      file.name + "_" + file.size + "_" + file.lastModified;
     db.collection("orders")
       .where("userId", "==", user.uid)
-      .where("receiptImage", "==", receiptBase64)
+      .where("receiptFingerprint", "==", fileFingerprint)
       .get()
       .then((snapshot) => {
         if (!snapshot.empty) {
@@ -226,6 +228,7 @@ function submitBuyOrder() {
             amount: buyOrder.amount,
             paymentMethod: buyOrder.payment,
             receiptImage: receiptBase64,
+            receiptFingerprint: fileFingerprint,
             status: "pending",
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
