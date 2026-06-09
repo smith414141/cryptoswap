@@ -1,13 +1,13 @@
 // ---- ADMIN EMAIL — change this to your email ----
-const ADMIN_EMAIL = "theismael050@gmail.com";
+const ADMIN_EMAIL = "@gmail.com";
 
 let allOrders = [];
 let currentFilter = "all";
 
 // ---- ADMIN LOGIN ----
 function adminLogin() {
-  const email = document.getElementById("admin-email").value;
-  const password = document.getElementById("admin-password").value;
+  const email = document.getElementById("theismael050@gmail.com").value;
+  const password = document.getElementById("12345678").value;
 
   if (email !== ADMIN_EMAIL) {
     showToast("Access denied", "error");

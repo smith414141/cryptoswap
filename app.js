@@ -318,34 +318,67 @@ function submitSellOrder() {
     .catch((err) => alert(err.message));
 }
 
-// ---- ORDERS ----
+// ---- ORDERS (REAL TIME) ----
 function loadOrders() {
   const user = auth.currentUser;
   if (!user) return;
+
   db.collection("orders")
     .where("userId", "==", user.uid)
     .orderBy("createdAt", "desc")
-    .get()
-    .then((snapshot) => {
-      const list = document.getElementById("orders-list");
-      if (snapshot.empty) {
-        list.innerHTML = "<p>No orders yet.</p>";
-        return;
-      }
-      list.innerHTML = "";
-      snapshot.forEach((doc) => {
-        const o = doc.data();
-        const div = document.createElement("div");
-        div.className = "order-card";
-        div.innerHTML = `
+    .onSnapshot(
+      (snapshot) => {
+        const list = document.getElementById("orders-list");
+
+        if (snapshot.empty) {
+          list.innerHTML = '<p class="no-orders">No orders yet.</p>';
+          return;
+        }
+
+        // Check for status changes and notify user
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            const o = change.doc.data();
+            if (o.status === "confirmed") {
+              showToast(
+                `🎉 Your ${o.type} order for ${o.crypto} has been confirmed!`,
+                "success"
+              );
+            }
+            if (o.status === "completed") {
+              showToast(
+                `⚡ Your ${o.type} order for ${o.crypto} is completed!`,
+                "success"
+              );
+            }
+            if (o.status === "cancelled") {
+              showToast(
+                `❌ Your ${o.type} order for ${o.crypto} was cancelled.`,
+                "error"
+              );
+            }
+          }
+        });
+
+        list.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const o = doc.data();
+          const div = document.createElement("div");
+          div.className = "order-card";
+          div.innerHTML = `
           <span class="order-type ${o.type}">${o.type.toUpperCase()}</span>
-          <span>${o.crypto} (${o.network})</span>
-          <span>$${o.amount}</span>
+          <span class="order-crypto-name">${o.crypto}</span>
+          <span class="order-network-tag">${o.network}</span>
+          <span class="order-amount">$${o.amount}</span>
           <span class="status-badge ${o.status}">${o.status}</span>
         `;
-        list.appendChild(div);
-      });
-    });
+          list.appendChild(div);
+        });
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
 }
 
 // ---- HELPERS ----
